@@ -15,6 +15,7 @@ export const loginUser = async ({
   callbackurl: string | null;
 }) => {
   try {
+    console.log("Login..........");
     const validFields = loginSchema.safeParse({ email, password });
     if (!validFields.success) {
       return { error: "Email or password is not valid" };
@@ -29,6 +30,8 @@ export const loginUser = async ({
 
     if (!user || !user?.email || !user.hashedPassword)
       return { error: "Email doesn't exist" };
+
+    console.log({ user });
 
     // login the user
     await signIn("credentials", {
