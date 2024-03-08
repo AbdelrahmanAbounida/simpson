@@ -46,7 +46,7 @@ export function ShareModal({
       await updateUserShares({
         quote,
         updateType: "add",
-        quoteShareId: uniqueId,
+        quoteShareId: shareUrl.split("process.env.NEXT_PUBLIC_APP_URL}/")[1],
       });
       setisShareQuote(true);
       toast.success("Quote is public now");
