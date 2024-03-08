@@ -20,20 +20,18 @@ export const loginUser = async ({
     if (!validFields.success) {
       return { error: "Email or password is not valid" };
     }
-    console.log({ validFields });
 
     // check if email exists
-    const user = await prismadb.user.findUnique({
-      where: {
-        email,
-      },
-    });
-    console.log({ user });
+    // const user = await prismadb.user.findUnique({
+    //   where: {
+    //     email,
+    //   },
+    // });
 
-    if (!user || !user?.email || !user.hashedPassword)
-      return { error: "Email doesn't exist" };
+    // if (!user || !user?.email || !user.hashedPassword)
+    //   return { error: "Email doesn't exist" };
 
-    console.log({ user });
+    // console.log({ user });
 
     // login the user
     await signIn("credentials", {
