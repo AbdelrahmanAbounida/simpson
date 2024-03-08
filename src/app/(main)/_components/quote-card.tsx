@@ -137,13 +137,7 @@ const QuoteCard = ({ quote }: { quote: SimpsonQuote }) => {
           ) : (
             <ShareModal quote={quote} setisShareQuote={setisShareQuote} />
           )}
-          {/* <Button
-            size={"icon"}
-            variant={"outline"}
-            className="flex items-center justify-center text-center"
-          >
-            <FaRegEye className="h-4 w-4 " />
-          </Button> */}
+
           <ViewModal quote={quote} />
         </div>
       </CardFooter>

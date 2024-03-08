@@ -33,8 +33,8 @@ export function ShareModal({
 }) {
   const { onOpenConfetti } = useMainStore();
 
-  const uniquteId = uuidv4();
-  const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL}/${uniquteId}`;
+  const [uniqueId, setuniqueId] = useState(uuidv4());
+  const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL}/${uniqueId}`;
 
   const [copiedClicked, setcopiedClicked] = useState(false);
   const [sharePending, setsharePending] = useState(false);
@@ -46,7 +46,7 @@ export function ShareModal({
       await updateUserShares({
         quote,
         updateType: "add",
-        quoteShareId: uniquteId,
+        quoteShareId: uniqueId,
       });
       setisShareQuote(true);
       toast.success("Quote is public now");

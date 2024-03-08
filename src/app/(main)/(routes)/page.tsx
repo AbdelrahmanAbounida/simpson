@@ -13,11 +13,6 @@ const Home = () => {
   const [character, setcharacter] = useState<string>("");
   const { currentQuotes, setecurrentQuotes } = useMainStore();
   const [isLoading, setisLoading] = useState(false);
-  // const {
-  //   data: currentQuotes,
-  //   isLoading,
-  //   error,
-  // } = useSimpsonsQuotes(count, character);
 
   const updateQuotes = async () => {
     try {

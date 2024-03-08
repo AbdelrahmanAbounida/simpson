@@ -5,11 +5,8 @@ import {
 } from "@/actions/simpsons";
 import { Button } from "@/components/ui/button";
 import { SimpsonFavouriteQuote, SimpsonShareQuote } from "@prisma/client";
-import Image from "next/image";
 import React, { useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
-import { IoShareSocialOutline } from "react-icons/io5";
-import { FaHeart } from "react-icons/fa";
 import SharesSkeletons from "../../_components/skeletons/shares-skeletons";
 import { useRouter } from "next/navigation";
 
