@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import { auth } from "@/auth";
 import toast, { Toaster } from "react-hot-toast";
 import { ConfettiProvider } from "./(main)/_components/confetti-provider";
 import { cn } from "@/lib/utils";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,7 +20,7 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <body className={cn(inter.className, "min-w-500px")}>
+        <body className={cn("min-w-500px")}>
           {children}
           <Toaster />
           <ConfettiProvider />
