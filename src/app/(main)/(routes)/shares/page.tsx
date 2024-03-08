@@ -9,6 +9,7 @@ import React, { useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import SharesSkeletons from "../../_components/skeletons/shares-skeletons";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Shares = () => {
   const [userShares, setuserShares] = useState<SimpsonShareQuote[]>();
@@ -81,11 +82,12 @@ const Shares = () => {
                   <Button
                     className="w-[110px] border-none "
                     variant={"secondary"}
-                    onClick={() => {
-                      router.push(`/shares/${quote.shareId}`);
-                    }}
+                    // onClick={() => {
+                    // }}
                   >
-                    View
+                    <Link href={`/shares/${quote.shareId}`} target="_blank">
+                      View
+                    </Link>
                   </Button>
                 </div>
               </div>
