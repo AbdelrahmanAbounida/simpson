@@ -43,14 +43,22 @@ export function ShareModal({
     try {
       setsharePending(true);
 
-      await updateUserShares({
+      // `${process.env.NEXT_PUBLIC_APP_URL}/shares/`)[1]},
+
+      const resp = await updateUserShares({
         quote,
         updateType: "add",
-        quoteShareId: shareUrl.split("process.env.NEXT_PUBLIC_APP_URL}/")[1],
+        quoteShareId: uniqueId,
       });
-      setisShareQuote(true);
-      toast.success("Quote is public now");
-      onOpenConfetti();
+
+      if (resp?.error) {
+        toast.error("Something went wrong");
+        return;
+      }
+      if (resp.success) {
+        toast.success("Quote is public now");
+        onOpenConfetti();
+      }
     } catch (error) {
       console.log({ error });
     } finally {

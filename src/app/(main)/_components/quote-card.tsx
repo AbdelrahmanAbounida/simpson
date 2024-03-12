@@ -48,10 +48,15 @@ const QuoteCard = ({ quote }: { quote: SimpsonQuote }) => {
   const unshareItem = async () => {
     try {
       setsharePending(true);
-      await updateUserShares({
+      const resp = await updateUserShares({
         quote,
         updateType: "remove",
+        quoteShareId: quote.shareId,
       });
+      if (resp.error) {
+        toast.error(resp.error);
+        return;
+      }
       setisShareQuote(false);
     } catch (error) {
       console.log({ error });

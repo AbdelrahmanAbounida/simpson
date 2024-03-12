@@ -17,7 +17,7 @@ const ShareViewer = async ({ params: { shareId } }: ShareViewerParams) => {
   });
 
   if (!currentQuote) {
-    return redirect("/");
+    return redirect("/not-exist");
   }
   return (
     <div className="w-full flex flex-col items-center justify-center gap-5 mt-9 pt-12">

@@ -63,7 +63,7 @@ model SimpsonFavouriteQuote {
   quote String @unique
   character String 
   image String
-  shareId String? 
+  shareId String? // @unique
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -73,7 +73,6 @@ model SimpsonShareQuote {
   quote String @unique
   character String 
   image String
-  shareId String? 
+  shareId String?  @unique
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@unique([userId,shareId])
 }

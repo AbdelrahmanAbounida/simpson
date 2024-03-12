@@ -171,6 +171,7 @@ export const updateUserShares = async ({
   quoteShareId?: String;
 }) => {
   try {
+    console.log({ quoteShareId });
     // const uniquteId = uuidv4();
     // Retrieve current user
     const currentUser = await getServerCurrentUser();
@@ -196,51 +197,40 @@ export const updateUserShares = async ({
     }
 
     // Check if the quote already exists in the database
-    const existingQuote = await prismadb.simpsonShareQuote.findUnique({
+    let existingQuote = await prismadb.simpsonShareQuote.findUnique({
       where: {
         quote: quote.quote,
+        shareId: quoteShareId as string,
       },
     });
 
     let updatedUser;
 
     if (updateType === "add") {
-      if (!existingQuote) {
-        // Create the quote if it doesn't exist
-        updatedUser = await prismadb.user.update({
-          where: { email: currentUser.email },
-          data: {
-            shares: {
-              create: {
-                character: quote.character,
-                image: quote.image,
-                quote: quote.quote,
-                shareId: quoteShareId as string,
-              },
-            },
-          },
-          include: {
-            shares: true,
-          },
-        });
-      } else {
-        // Connect the existing quote
-        updatedUser = await prismadb.user.update({
-          where: { email: currentUser.email },
-          data: {
-            shares: {
-              connect: {
-                quote: quote.quote,
-              },
-            },
-          },
-          include: {
-            shares: true,
-          },
+      let newShareId = quoteShareId as string;
+      while (!newShareId || existingQuote) {
+        newShareId = uuidv4();
+        existingQuote = await prismadb.simpsonShareQuote.findUnique({
+          where: { shareId: newShareId },
         });
       }
 
-      // onOpenConfetti(); // open confetti for share
+      updatedUser = await prismadb.user.update({
+        where: { email: currentUser.email },
+        data: {
+          shares: {
+            create: {
+              character: quote.character,
+              image: quote.image,
+              quote: quote.quote,
+              shareId: newShareId,
+            },
+          },
+        },
+        include: {
+          shares: true,
+        },
+      });
     } else if (updateType === "remove") {
       // Check if the quote exists in the user's shares
       const quoteExists = user.shares.some(
@@ -248,7 +238,7 @@ export const updateUserShares = async ({
       );
 
       if (!quoteExists) {
-        throw new Error(`Quote not found in shares`);
+        return { error: `Quote not found in shares` };
       }
 
       // Remove the quote
@@ -258,6 +248,7 @@ export const updateUserShares = async ({
           shares: {
             delete: {
               quote: quote.quote,
+              shareId: quoteShareId as string,
             },
           },
         },
@@ -267,7 +258,7 @@ export const updateUserShares = async ({
       });
     }
 
-    return updatedUser;
+    return { success: "User shares updated successfully" };
   } catch (error) {
     console.log({ error });
     return { error: "Something went wrong" };

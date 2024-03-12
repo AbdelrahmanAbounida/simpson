@@ -3,4 +3,5 @@ export interface SimpsonQuote {
   character: string;
   image: string;
   characterDirection: string;
+  shareId?: string;
 }
